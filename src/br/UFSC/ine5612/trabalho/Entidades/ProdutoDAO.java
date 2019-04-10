@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -18,10 +19,10 @@ import java.util.HashMap;
  *
  * @author Ismael
  */
-public class ProdutoDAO {
+public class ProdutoDAO implements Serializable {
     private static ProdutoDAO instancia;
     private HashMap<Integer, Produto> cacheProdutos = new HashMap<>();
-    private final String arquivoProdutos = "produtos.dat";
+    private final String arquivoProdutos = "produtos.txt";
     
     private ProdutoDAO (){
         load();
@@ -92,6 +93,7 @@ public class ProdutoDAO {
     }
     
     public Collection<Produto> getList(){
+        load();
 	return cacheProdutos.values();
     }
 }

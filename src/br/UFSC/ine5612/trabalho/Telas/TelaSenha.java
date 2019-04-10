@@ -5,6 +5,7 @@
  */
 package br.UFSC.ine5612.trabalho.Telas;
 
+import br.UFSC.ine5612.trabalho.Controlador.ControladorCompra;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,19 +14,19 @@ import java.awt.event.ActionListener;
  * @author Ismael
  */
 public class TelaSenha extends javax.swing.JFrame {
-
+    private static TelaSenha instancia;
     /**
      * Creates new form TelaSenha
      */
     private TelaSenha() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
-    private static class TelaSenhaHolder {
-
-        private static TelaSenha INSTANCE = new TelaSenha();
-    }
-    public static TelaSenha getInstance() {
-        return TelaSenhaHolder.INSTANCE;
+    public static TelaSenha getInstancia() {
+        if (instancia == null) {
+            instancia = new TelaSenha();
+        }
+        return instancia;
     }
 
     
@@ -50,10 +51,18 @@ public class TelaSenha extends javax.swing.JFrame {
         txtInsiraSenha.setText("Insira a senha de administrador");
 
         campoInsiraSenha.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        campoInsiraSenha.setBorder(null);
 
         botaoCancelar.setText("Cancelar");
+        botaoCancelar.setBorder(null);
+        botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoCancelarActionPerformed(evt);
+            }
+        });
 
         botaoOK.setText("OK");
+        botaoOK.setBorder(null);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -87,40 +96,9 @@ public class TelaSenha extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaSenha.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaSenha.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaSenha.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaSenha.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaSenha().setVisible(false);
-            }
-        });
-    }
+    private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed
+       ControladorCompra.getInstancia().showTelaCompra();
+    }//GEN-LAST:event_botaoCancelarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCancelar;
@@ -132,25 +110,6 @@ public class TelaSenha extends javax.swing.JFrame {
     private static final String BOTAO_CANCELA = "1";
     private static final String BOTAO_OK = "2";
     
-    public class GerenciaBotoes implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent evento) {
-            String opcao = evento.getActionCommand();
-            if(opcao.equals(BOTAO_CANCELA)){
-                //volta carrinho
-            } 
-            if(opcao.equals(BOTAO_OK)){
-                //verifica senha
-            } 
-        }
-    }   
     
     
-    public void show() {
-        TelaSenha.getInstance().setVisible(true);
-    }
-
-    public void hide() {
-        TelaSenha.getInstance().dispose();
-    }
 }

@@ -5,6 +5,7 @@
  */
 package br.UFSC.ine5612.trabalho.Telas;
 
+import br.UFSC.ine5612.trabalho.Controlador.ControladorCompra;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
@@ -20,6 +21,7 @@ public class TelaCompra extends javax.swing.JFrame {
      */
     private TelaCompra() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     public static TelaCompra getInstancia() {
         if (instancia == null) {
@@ -57,7 +59,7 @@ public class TelaCompra extends javax.swing.JFrame {
         campoInsereCodigo.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         campoInsereCodigo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         campoInsereCodigo.setText("Digite o código de barras");
-        campoInsereCodigo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        campoInsereCodigo.setBorder(null);
         campoInsereCodigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoInsereCodigoActionPerformed(evt);
@@ -127,11 +129,16 @@ public class TelaCompra extends javax.swing.JFrame {
 
         botaoCancelarCompra.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         botaoCancelarCompra.setText("Cancelar Compra");
-        botaoCancelarCompra.setBorder(new javax.swing.border.MatteBorder(null));
+        botaoCancelarCompra.setBorder(null);
+        botaoCancelarCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoCancelarCompraActionPerformed(evt);
+            }
+        });
 
         botaoCancelarProduto.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         botaoCancelarProduto.setText("Cancelar Produto");
-        botaoCancelarProduto.setBorder(new javax.swing.border.MatteBorder(null));
+        botaoCancelarProduto.setBorder(null);
         botaoCancelarProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoCancelarProdutoActionPerformed(evt);
@@ -174,7 +181,7 @@ public class TelaCompra extends javax.swing.JFrame {
         txtTotalCompra.setText("Total da compra");
 
         botaoEnter.setText("ENTER");
-        botaoEnter.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        botaoEnter.setBorder(null);
         botaoEnter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoEnterActionPerformed(evt);
@@ -183,7 +190,7 @@ public class TelaCompra extends javax.swing.JFrame {
 
         botaoFinalizaCompra.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         botaoFinalizaCompra.setText("FINALIZAR COMPRA");
-        botaoFinalizaCompra.setBorder(new javax.swing.border.MatteBorder(null));
+        botaoFinalizaCompra.setBorder(null);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -258,51 +265,20 @@ public class TelaCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_campoInsereCodigoActionPerformed
 
     private void botaoCancelarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarProdutoActionPerformed
-        // TODO add your handling code here:
+        ControladorCompra.getInstancia().showTelaSenha();
     }//GEN-LAST:event_botaoCancelarProdutoActionPerformed
 
     private void campoTotalCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTotalCompraActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_campoTotalCompraActionPerformed
 
     private void botaoEnterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEnterActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoEnterActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaCompra().getInstancia().setVisible(true);
-            }
-        });
-    }
+    private void botaoCancelarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarCompraActionPerformed
+        ControladorCompra.getInstancia().showTelaSenha();
+    }//GEN-LAST:event_botaoCancelarCompraActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCancelarCompra;
@@ -322,32 +298,7 @@ public class TelaCompra extends javax.swing.JFrame {
     private static final String BOTAO_CANCELA_COMPRA = "2"; 
     
     
-    public class GerenciaBotoes implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent evento) {
-            String opcao = evento.getActionCommand();
-            if(opcao.equals(BOTAO_CANCELA_PRODUTO)){
-                            
-            } else {
-                
-            }
-            if(opcao.equals(BOTAO_CANCELA_COMPRA)){
-                
-            } else {
-                
-            }
-        }
-    }    
-    
-    public void show() {
-        TelaCompra.getInstancia().setVisible(true);
-    }
-
-    public void hide() {
-        TelaCompra.getInstancia().dispose();
-    }
-    
-
+      
 }
 
 

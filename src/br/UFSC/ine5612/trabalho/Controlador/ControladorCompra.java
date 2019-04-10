@@ -6,18 +6,41 @@
 package br.UFSC.ine5612.trabalho.Controlador;
 
 import br.UFSC.ine5612.trabalho.Telas.TelaCompra;
+import br.UFSC.ine5612.trabalho.Telas.TelaInicial;
+import br.UFSC.ine5612.trabalho.Telas.TelaSenha;
+import java.io.Serializable;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Ismael
  */
-public class ControladorCompra {
+public class ControladorCompra implements Serializable {
+    private static ControladorCompra instancia;
+            
+    public static ControladorCompra getInstancia() {
+        if (instancia == null) {
+            instancia = new ControladorCompra();
+        }
+        return instancia;
+    }
     
     
+    private ControladorCompra (){
+        
+    }
     public void showTelaCompra(){
         TelaCompra.getInstancia().setVisible(true);
     }
+    
+    public void showTelaSenha(){
+        TelaSenha.getInstancia().setVisible(true);
+    }
+    
+    public void showTelaInicial(){
+        TelaInicial.getInstancia().setVisible(true);
+    }
+    
     public void insereProdutoNaCompra(){
         
         

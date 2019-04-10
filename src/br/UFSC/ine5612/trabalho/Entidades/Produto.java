@@ -5,16 +5,18 @@
  */
 package br.UFSC.ine5612.trabalho.Entidades;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Ismael
  */
-public class Produto {
+public class Produto implements Serializable {
     private String nome;
     private Integer codProduto;
-    private int preco;
+    private float preco;
 
-    public Produto(String nome, Integer codigo, int preco) {
+    public Produto(String nome, Integer codigo, float preco) {
         this.nome = nome;
         this.codProduto = codigo;
         this.preco = preco;
@@ -36,13 +38,12 @@ public class Produto {
         this.codProduto = codigo;
     }
 
-    public int getPreco() {
+    public float getPreco() {
         return preco;
     }
 
-    public void setPreco(int preco) {
+    public void setPreco(float preco) {
         this.preco = preco;
     }
-    
     
 }
