@@ -16,12 +16,14 @@ public class Compra {
     private ArrayList<Produto> listaCompra;
     private Integer numeroCompra;
     private int data;
+    private float valorTotal;
 
 
-    public Compra(ArrayList<Produto> listaCompra, Integer numeroCompra, int data) {
+    public Compra(ArrayList<Produto> listaCompra, Integer numeroCompra, int data, float valorTotal) {
         this.listaCompra = listaCompra;
         this.numeroCompra = numeroCompra;
         this.data = data;
+        this.valorTotal = valorTotal;
     }
 
     public ArrayList<Produto> getListaCompra() {
@@ -55,4 +57,14 @@ public class Compra {
     public void setData(int data) {
         this.data = data;
     }
+
+    public float getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(float valorTotal) {
+        this.valorTotal = valorTotal;
+    }
+    
+    
 }

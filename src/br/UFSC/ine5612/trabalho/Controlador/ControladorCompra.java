@@ -5,7 +5,11 @@
  */
 package br.UFSC.ine5612.trabalho.Controlador;
 
+import br.UFSC.ine5612.trabalho.Entidades.Compra;
+import br.UFSC.ine5612.trabalho.Entidades.CompraDAO;
+import br.UFSC.ine5612.trabalho.Telas.TelaBalanco;
 import br.UFSC.ine5612.trabalho.Telas.TelaCompra;
+import br.UFSC.ine5612.trabalho.Telas.TelaDataBalanco;
 import br.UFSC.ine5612.trabalho.Telas.TelaInicial;
 import br.UFSC.ine5612.trabalho.Telas.TelaSenha;
 import java.io.Serializable;
@@ -41,6 +45,27 @@ public class ControladorCompra implements Serializable {
         TelaInicial.getInstancia().setVisible(true);
     }
     
+    public void showTelaDataBalanco(){
+        TelaDataBalanco.getInstancia().setVisible(true);
+    }
+    
+    public void showTelaBalanco(int data){
+        int numCompras = 0;
+        float valorTotal = 0;
+        for (Compra compra : CompraDAO.getInstancia().getList()) {
+            if(compra.getData() == data){
+                numCompras++;
+                valorTotal = valorTotal+compra.getValorTotal();
+            }
+        }
+        if(numCompras == 0){
+            JOptionPane.showMessageDialog(null, "Não há nenhuma compra nessa data", "Data inválida", JOptionPane.DEFAULT_OPTION);
+        } else {
+            TelaBalanco.getInstancia().setDadosBalanco(numCompras, valorTotal);
+            TelaBalanco.getInstancia().setVisible(true);
+        }       
+    }
+    
     public void insereProdutoNaCompra(){
         
         
@@ -48,11 +73,7 @@ public class ControladorCompra implements Serializable {
     public void mostraModalConfirmacao(){
         
     }
-    
-    public void mostraModal(){
-        JOptionPane.showMessageDialog(null, "Cancelamento", "Operação realizada com sucesso", JOptionPane.DEFAULT_OPTION);
-    }
-    
+        
     public void cancelaProduto(){
         
     }
