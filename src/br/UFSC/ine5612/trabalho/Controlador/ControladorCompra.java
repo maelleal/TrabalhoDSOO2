@@ -7,6 +7,7 @@ package br.UFSC.ine5612.trabalho.Controlador;
 
 import br.UFSC.ine5612.trabalho.Entidades.Compra;
 import br.UFSC.ine5612.trabalho.Entidades.CompraDAO;
+import br.UFSC.ine5612.trabalho.Entidades.Produto;
 import br.UFSC.ine5612.trabalho.Telas.TelaBalanco;
 import br.UFSC.ine5612.trabalho.Telas.TelaCompra;
 import br.UFSC.ine5612.trabalho.Telas.TelaDataBalanco;
@@ -21,6 +22,7 @@ import javax.swing.JOptionPane;
  */
 public class ControladorCompra implements Serializable {
     private static ControladorCompra instancia;
+  
             
     public static ControladorCompra getInstancia() {
         if (instancia == null) {
@@ -47,6 +49,15 @@ public class ControladorCompra implements Serializable {
     
     public void showTelaDataBalanco(){
         TelaDataBalanco.getInstancia().setVisible(true);
+    }
+    
+    public Produto verificaProduto(String numero){
+        int codProduto = Integer.valueOf(numero);	
+        Produto p = ControladorProduto.getInstancia().findProdutoByCodigo(codProduto);
+        if( p == null){
+            JOptionPane.showMessageDialog(null, "Não há nenhum item com o código "+codProduto+"", "Código inválido", JOptionPane.DEFAULT_OPTION);        
+        }
+        return p;
     }
     
     public void showTelaBalanco(int data){
@@ -85,4 +96,6 @@ public class ControladorCompra implements Serializable {
     public void finalizaCompra(){
         
     }
+
+    
 }

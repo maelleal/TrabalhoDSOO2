@@ -6,6 +6,7 @@
 package br.UFSC.ine5612.trabalho.Telas;
 
 import br.UFSC.ine5612.trabalho.Controlador.ControladorCompra;
+import br.UFSC.ine5612.trabalho.Entidades.Produto;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
@@ -274,6 +275,8 @@ public class TelaCompra extends javax.swing.JFrame {
 
     private void botaoEnterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEnterActionPerformed
         // TODO add your handling code here:
+        Produto p = ControladorCompra.getInstancia().verificaProduto(campoInsereCodigo.getText());
+      //  tabelaProdutos.add;
     }//GEN-LAST:event_botaoEnterActionPerformed
 
     private void botaoCancelarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarCompraActionPerformed
@@ -294,8 +297,7 @@ public class TelaCompra extends javax.swing.JFrame {
     private javax.swing.JLabel txtTerminal;
     private javax.swing.JLabel txtTotalCompra;
     // End of variables declaration//GEN-END:variables
-    private static final String BOTAO_CANCELA_PRODUTO = "1"; 
-    private static final String BOTAO_CANCELA_COMPRA = "2"; 
+
     
     
       

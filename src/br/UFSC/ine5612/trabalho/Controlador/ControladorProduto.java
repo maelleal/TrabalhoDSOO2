@@ -33,4 +33,7 @@ public class ControladorProduto implements Serializable {
     public void serializaProduto(Produto produto) {
         ProdutoDAO.getInstancia().put(produto);
     }
+    public Produto findProdutoByCodigo(int numero){
+        return ProdutoDAO.getInstancia().get(numero);
+    }
 }
