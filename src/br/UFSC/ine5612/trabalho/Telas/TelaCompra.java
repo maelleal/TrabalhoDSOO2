@@ -6,17 +6,24 @@
 package br.UFSC.ine5612.trabalho.Telas;
 
 import br.UFSC.ine5612.trabalho.Controlador.ControladorCompra;
+import br.UFSC.ine5612.trabalho.Controlador.ControladorProduto;
+import br.UFSC.ine5612.trabalho.Controlador.ControladorSenha;
 import br.UFSC.ine5612.trabalho.Entidades.Produto;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Ismael
  */
 public class TelaCompra extends javax.swing.JFrame {
+
     private static TelaCompra instancia;
+
     /**
      * Creates new form TerminalUI
      */
@@ -24,14 +31,13 @@ public class TelaCompra extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
     }
+
     public static TelaCompra getInstancia() {
         if (instancia == null) {
             instancia = new TelaCompra();
         }
         return instancia;
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -72,8 +78,83 @@ public class TelaCompra extends javax.swing.JFrame {
         tabelaProdutos.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         tabelaProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"0123142", null, null},
-                {"616468", null, null},
+                {"", null, null},
+                {"", null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
                 {null, null, null},
                 {null, null, null},
                 {null, null, null},
@@ -150,6 +231,7 @@ public class TelaCompra extends javax.swing.JFrame {
         txtTerminal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtTerminal.setText("Terminal de caixa");
 
+        campoTotalCompra.setEditable(false);
         campoTotalCompra.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         campoTotalCompra.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         campoTotalCompra.setText("R$ = 0,00");
@@ -192,6 +274,11 @@ public class TelaCompra extends javax.swing.JFrame {
         botaoFinalizaCompra.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         botaoFinalizaCompra.setText("FINALIZAR COMPRA");
         botaoFinalizaCompra.setBorder(null);
+        botaoFinalizaCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoFinalizaCompraActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -266,22 +353,75 @@ public class TelaCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_campoInsereCodigoActionPerformed
 
     private void botaoCancelarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarProdutoActionPerformed
-        ControladorCompra.getInstancia().showTelaSenha();
+        int linha = tabelaProdutos.getSelectedRow();
+        if (linha == -1) {
+            JOptionPane.showMessageDialog(null, "Selecione um produto para ser cancelado!", "Aviso de Produto", JOptionPane.DEFAULT_OPTION);
+        } else {
+            JPasswordField pf = new JPasswordField();
+            int confirm = JOptionPane.showConfirmDialog(null, pf, "Insira a senha do Administrador!", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (confirm == JOptionPane.OK_OPTION) {
+                String senha = new String(pf.getPassword());
+                if (ControladorSenha.getInstancia().verificaSenha(senha)) {
+                    tabelaProdutos.removeRowSelectionInterval(linha, linha);
+                    atualizaTabela(ControladorCompra.getInstancia().removeProduto((int) tabelaProdutos.getValueAt(linha, 0)));
+                    ((DefaultTableModel) tabelaProdutos.getModel()).removeRow(linha);
+                }
+            }
+        }
+
+        //ControladorCompra.getInstancia().showTelaSenha();
     }//GEN-LAST:event_botaoCancelarProdutoActionPerformed
 
     private void campoTotalCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTotalCompraActionPerformed
-        
+
     }//GEN-LAST:event_campoTotalCompraActionPerformed
 
     private void botaoEnterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEnterActionPerformed
         // TODO add your handling code here:
-        Produto p = ControladorCompra.getInstancia().verificaProduto(campoInsereCodigo.getText());
-      //  tabelaProdutos.add;
+        ArrayList<Produto> produtos = ControladorCompra.getInstancia().verificaProduto(campoInsereCodigo.getText());
+        atualizaTabela(produtos);
     }//GEN-LAST:event_botaoEnterActionPerformed
+    private void atualizaTabela(ArrayList<Produto> produtos) {
+        int linha = 0;
+        float precoTotal = 0;
+        for (Produto p : produtos) {
+            tabelaProdutos.setValueAt(p.getCodProduto(), linha, 0);
+            tabelaProdutos.setValueAt(p.getNome(), linha, 1);
+            String preco = String.valueOf(p.getPreco()).replace(".", ",");
+            tabelaProdutos.setValueAt("R$ " + preco, linha, 2);
+
+            linha++;
+            precoTotal += p.getPreco();
+        }
+        campoTotalCompra.setText("R$ = " + String.valueOf(precoTotal).replace(".", ","));
+    }
 
     private void botaoCancelarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarCompraActionPerformed
-        ControladorCompra.getInstancia().showTelaSenha();
+        JPasswordField pf = new JPasswordField();
+        int confirm = JOptionPane.showConfirmDialog(null, pf, "Insira a senha do Administrador!", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        if (confirm == JOptionPane.OK_OPTION) {
+            String senha = new String(pf.getPassword());
+            if (ControladorSenha.getInstancia().verificaSenha(senha)) {
+                for (int i = 0; i <= ControladorCompra.getInstancia().getTamanhoLista(); i++) {
+                    tabelaProdutos.setValueAt("", i, 0);
+                    tabelaProdutos.setValueAt("", i, 1);
+                    tabelaProdutos.setValueAt("", i, 2);
+                    ((DefaultTableModel) tabelaProdutos.getModel()).removeRow(i);
+                }
+                tabelaProdutos.setValueAt("", 0, 0);
+                tabelaProdutos.setValueAt("", 0, 1);
+                tabelaProdutos.setValueAt("", 0, 2);
+                campoTotalCompra.setText("R$ = 0,00");
+                campoInsereCodigo.setText("Digite o código de barras");
+                ControladorCompra.getInstancia().cancelarCompra();
+            }
+        }
     }//GEN-LAST:event_botaoCancelarCompraActionPerformed
+
+    private void botaoFinalizaCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinalizaCompraActionPerformed
+        // TODO add your handling code here:
+        ControladorCompra.getInstancia().finalizaCompra(campoTotalCompra.getText());
+    }//GEN-LAST:event_botaoFinalizaCompraActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCancelarCompra;
@@ -298,9 +438,4 @@ public class TelaCompra extends javax.swing.JFrame {
     private javax.swing.JLabel txtTotalCompra;
     // End of variables declaration//GEN-END:variables
 
-    
-    
-      
 }
-
-

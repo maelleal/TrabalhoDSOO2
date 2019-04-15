@@ -113,7 +113,7 @@ public class TelaDataBalanco extends javax.swing.JFrame {
 //            ControladorCompra.getInstancia().showTelaBalanco(Integer.parseInt(data));
 //        }
         
-        ControladorCompra.getInstancia().showTelaBalanco(Integer.parseInt(data));
+        //ControladorCompra.getInstancia().showTelaBalanco(Integer.parseInt(data));
     }//GEN-LAST:event_botaoOKActionPerformed
 
     private void botaoCancelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelaActionPerformed

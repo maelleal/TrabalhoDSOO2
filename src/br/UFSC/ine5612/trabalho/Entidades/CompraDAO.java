@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -18,10 +19,11 @@ import java.util.HashMap;
  *
  * @author Ismael
  */
-public class CompraDAO {
+public class CompraDAO implements Serializable{
+    
     private static CompraDAO instancia;
     private HashMap<Integer, Compra> cacheCompras = new HashMap<>();
-    private final String arquivoCompras = "compras.dat";
+    private final String arquivoCompras = "compras.txt";
     
     private CompraDAO (){
         load();
@@ -90,8 +92,19 @@ public class CompraDAO {
         }
         return instancia;
     }
-    
+
     public Collection<Compra> getList(){
+        load();
 	return cacheCompras.values();
+    }
+    
+    public Integer getProxNumCompra(){
+        Integer aux = 0;
+        for(Compra c : getList()){
+            if(c.getNumeroCompra() >= aux){
+                aux = c.getNumeroCompra() + 1 ;
+            }
+        }
+        return aux;
     }
 }

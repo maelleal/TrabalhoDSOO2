@@ -6,6 +6,7 @@
 package br.UFSC.ine5612.trabalho.Telas;
 
 import br.UFSC.ine5612.trabalho.Controlador.ControladorCompra;
+import br.UFSC.ine5612.trabalho.Controlador.ControladorSenha;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -63,6 +64,11 @@ public class TelaSenha extends javax.swing.JFrame {
 
         botaoOK.setText("OK");
         botaoOK.setBorder(null);
+        botaoOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoOKActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -97,8 +103,13 @@ public class TelaSenha extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed
-       ControladorCompra.getInstancia().showTelaCompra();
+         TelaSenha.getInstancia().setVisible(false);
+        ControladorCompra.getInstancia().showTelaCompra();
     }//GEN-LAST:event_botaoCancelarActionPerformed
+
+    private void botaoOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoOKActionPerformed
+        ControladorSenha.getInstancia().verificaSenha(campoInsiraSenha.getText());
+    }//GEN-LAST:event_botaoOKActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCancelar;
@@ -106,10 +117,7 @@ public class TelaSenha extends javax.swing.JFrame {
     private javax.swing.JTextField campoInsiraSenha;
     private javax.swing.JLabel txtInsiraSenha;
     // End of variables declaration//GEN-END:variables
-    
-    private static final String BOTAO_CANCELA = "1";
-    private static final String BOTAO_OK = "2";
-    
+
     
     
 }

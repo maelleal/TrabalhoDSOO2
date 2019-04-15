@@ -14,6 +14,10 @@ import br.UFSC.ine5612.trabalho.Telas.TelaDataBalanco;
 import br.UFSC.ine5612.trabalho.Telas.TelaInicial;
 import br.UFSC.ine5612.trabalho.Telas.TelaSenha;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,81 +25,110 @@ import javax.swing.JOptionPane;
  * @author Ismael
  */
 public class ControladorCompra implements Serializable {
+
     private static ControladorCompra instancia;
-  
-            
+    private Integer numeroCompra = 1;
+    ArrayList<Produto> listProdutos = new ArrayList();
+
     public static ControladorCompra getInstancia() {
         if (instancia == null) {
             instancia = new ControladorCompra();
         }
         return instancia;
     }
-    
-    
-    private ControladorCompra (){
-        
+
+    private ControladorCompra(){
+
     }
-    public void showTelaCompra(){
+
+    public void showTelaCompra() {
         TelaCompra.getInstancia().setVisible(true);
     }
-    
-    public void showTelaSenha(){
+
+    public void showTelaSenha() {
         TelaSenha.getInstancia().setVisible(true);
     }
-    
-    public void showTelaInicial(){
+
+    public void showTelaInicial() {
         TelaInicial.getInstancia().setVisible(true);
     }
-    
-    public void showTelaDataBalanco(){
+
+    public void showTelaDataBalanco() {
         TelaDataBalanco.getInstancia().setVisible(true);
     }
-    
-    public Produto verificaProduto(String numero){
-        int codProduto = Integer.valueOf(numero);	
-        Produto p = ControladorProduto.getInstancia().findProdutoByCodigo(codProduto);
-        if( p == null){
-            JOptionPane.showMessageDialog(null, "Não há nenhum item com o código "+codProduto+"", "Código inválido", JOptionPane.DEFAULT_OPTION);        
+
+    public ArrayList<Produto> verificaProduto(String numero) {
+        try {
+            int codProduto = Integer.valueOf(numero);
+            Produto produtoAchado = ControladorProduto.getInstancia().findProdutoByCodigo(codProduto);
+
+            if (produtoAchado == null) {
+                JOptionPane.showMessageDialog(null, "Não há nenhum item com o código " + codProduto + "", "Código inválido", JOptionPane.ERROR_MESSAGE);
+            } else {
+                listProdutos.add(produtoAchado);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Esse campo só aceita numero de 0-9, tente novamente!", "Código inválido", JOptionPane.ERROR_MESSAGE);
         }
-        return p;
+        return listProdutos;
     }
-    
-    public void showTelaBalanco(int data){
+
+    public void showTelaBalanco(String data) {
         int numCompras = 0;
         float valorTotal = 0;
         for (Compra compra : CompraDAO.getInstancia().getList()) {
-            if(compra.getData() == data){
+            if (compra.getData().equals(data)) {
                 numCompras++;
-                valorTotal = valorTotal+compra.getValorTotal();
+                valorTotal = valorTotal + compra.getValorTotal();
             }
         }
-        if(numCompras == 0){
+        if (numCompras == 0) {
             JOptionPane.showMessageDialog(null, "Não há nenhuma compra nessa data", "Data inválida", JOptionPane.DEFAULT_OPTION);
         } else {
             TelaBalanco.getInstancia().setDadosBalanco(numCompras, valorTotal);
             TelaBalanco.getInstancia().setVisible(true);
-        }       
-    }
-    
-    public void insereProdutoNaCompra(){
-        
-        
-    }
-    public void mostraModalConfirmacao(){
-        
-    }
-        
-    public void cancelaProduto(){
-        
-    }
-    
-    public void cancelaCompra(){
-        
-    }
-    
-    public void finalizaCompra(){
-        
+        }
     }
 
-    
+    public ArrayList<Produto> removeProduto(int codProduto) {
+        for (Produto p : listProdutos) {
+            if (p.getCodProduto() == codProduto) {
+                listProdutos.remove(p);
+                return listProdutos;
+            }
+        }
+        return listProdutos;
+    }
+
+    public void cancelarCompra() {
+        listProdutos.clear();
+        TelaCompra.getInstancia().setVisible(false);
+        showTelaInicial();
+    }
+
+    public int getTamanhoLista() {
+        return listProdutos.size();
+    }
+
+    private String getDate() {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
+
+    public void finalizaCompra(String valor) {
+        valor = valor.replace(",", ".");
+        valor = valor.replace("R", "");
+        valor = valor.replace("$", "");
+        valor = valor.replace(" ", "");
+        valor = valor.replace("=", "");
+        float valorTotal = Float.parseFloat(valor);
+        Compra c = new Compra(listProdutos, getDate(), valorTotal);
+        CompraDAO.getInstancia().put(c);
+        System.out.println(c.getData());
+        System.out.println(c.getListaCompra());
+        System.out.println(c.getNumeroCompra());
+        System.out.println(c.getValorTotal());
+    }
+
 }

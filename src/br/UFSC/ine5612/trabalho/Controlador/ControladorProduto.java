@@ -36,4 +36,6 @@ public class ControladorProduto implements Serializable {
     public Produto findProdutoByCodigo(int numero){
         return ProdutoDAO.getInstancia().get(numero);
     }
+
+    
 }
