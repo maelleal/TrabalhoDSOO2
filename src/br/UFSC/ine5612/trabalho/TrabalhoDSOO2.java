@@ -54,6 +54,8 @@ public class TrabalhoDSOO2 {
 //        for (Produto p : ProdutoDAO.getInstancia().getList()) {
 //            System.out.println(p.getNome());
 //        }
+            
+        
     }
     
     

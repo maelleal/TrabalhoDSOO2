@@ -5,12 +5,14 @@
  */
 package br.UFSC.ine5612.trabalho.Telas;
 
+import br.UFSC.ine5612.trabalho.Controlador.ControladorCartao;
 import br.UFSC.ine5612.trabalho.Controlador.ControladorCompra;
 import br.UFSC.ine5612.trabalho.Controlador.ControladorProduto;
 import br.UFSC.ine5612.trabalho.Controlador.ControladorSenha;
 import br.UFSC.ine5612.trabalho.Entidades.Produto;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
@@ -67,9 +69,19 @@ public class TelaCompra extends javax.swing.JFrame {
         campoInsereCodigo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         campoInsereCodigo.setText("Digite o código de barras");
         campoInsereCodigo.setBorder(null);
+        campoInsereCodigo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                campoInsereCodigoFocusGained(evt);
+            }
+        });
         campoInsereCodigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoInsereCodigoActionPerformed(evt);
+            }
+        });
+        campoInsereCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoInsereCodigoKeyPressed(evt);
             }
         });
 
@@ -270,6 +282,11 @@ public class TelaCompra extends javax.swing.JFrame {
                 botaoEnterActionPerformed(evt);
             }
         });
+        botaoEnter.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                botaoEnterKeyPressed(evt);
+            }
+        });
 
         botaoFinalizaCompra.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         botaoFinalizaCompra.setText("FINALIZAR COMPRA");
@@ -350,6 +367,7 @@ public class TelaCompra extends javax.swing.JFrame {
 
     private void campoInsereCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoInsereCodigoActionPerformed
         // TODO add your handling code here:
+ 
     }//GEN-LAST:event_campoInsereCodigoActionPerformed
 
     private void botaoCancelarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarProdutoActionPerformed
@@ -420,8 +438,27 @@ public class TelaCompra extends javax.swing.JFrame {
 
     private void botaoFinalizaCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinalizaCompraActionPerformed
         // TODO add your handling code here:
-        ControladorCompra.getInstancia().finalizaCompra(campoTotalCompra.getText());
+        ControladorCartao.getInstancia().showTelaCartao();
     }//GEN-LAST:event_botaoFinalizaCompraActionPerformed
+
+    private void campoInsereCodigoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoInsereCodigoFocusGained
+        // TODO add your handling code here:
+        campoInsereCodigo.setText("");
+    }//GEN-LAST:event_campoInsereCodigoFocusGained
+
+    private void botaoEnterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botaoEnterKeyPressed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_botaoEnterKeyPressed
+
+    private void campoInsereCodigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoInsereCodigoKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            ArrayList<Produto> produtos = ControladorCompra.getInstancia().verificaProduto(campoInsereCodigo.getText());
+            atualizaTabela(produtos);
+            campoInsereCodigo.setText("");
+        }
+    }//GEN-LAST:event_campoInsereCodigoKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCancelarCompra;
@@ -437,5 +474,20 @@ public class TelaCompra extends javax.swing.JFrame {
     private javax.swing.JLabel txtTerminal;
     private javax.swing.JLabel txtTotalCompra;
     // End of variables declaration//GEN-END:variables
+
+    public void limpaTela() {
+        for (int i = 0; i <= ControladorCompra.getInstancia().getTamanhoLista(); i++) {
+            tabelaProdutos.setValueAt("", i, 0);
+            tabelaProdutos.setValueAt("", i, 1);
+            tabelaProdutos.setValueAt("", i, 2);
+            ((DefaultTableModel) tabelaProdutos.getModel()).removeRow(i);
+        }
+        tabelaProdutos.setValueAt("", 0, 0);
+        tabelaProdutos.setValueAt("", 0, 1);
+        tabelaProdutos.setValueAt("", 0, 2);
+        campoTotalCompra.setText("R$ = 0,00");
+        campoInsereCodigo.setText("Digite o código de barras");
+        dispose();
+    }
 
 }

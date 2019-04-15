@@ -10,6 +10,7 @@ import br.UFSC.ine5612.trabalho.Entidades.CompraDAO;
 import br.UFSC.ine5612.trabalho.Entidades.Produto;
 import br.UFSC.ine5612.trabalho.Telas.TelaBalanco;
 import br.UFSC.ine5612.trabalho.Telas.TelaCompra;
+import br.UFSC.ine5612.trabalho.Telas.TelaCupom;
 import br.UFSC.ine5612.trabalho.Telas.TelaDataBalanco;
 import br.UFSC.ine5612.trabalho.Telas.TelaInicial;
 import br.UFSC.ine5612.trabalho.Telas.TelaSenha;
@@ -51,6 +52,26 @@ public class ControladorCompra implements Serializable {
 
     public void showTelaInicial() {
         TelaInicial.getInstancia().setVisible(true);
+        ControladorProduto.getInstancia().criaProduto("Picanha", 11, 20);
+        ControladorProduto.getInstancia().criaProduto("Fandangos", 12, 3.50f);
+        ControladorProduto.getInstancia().criaProduto("Doritos", 13, 3.50f);
+        ControladorProduto.getInstancia().criaProduto("Pipoca", 14, 2);
+        ControladorProduto.getInstancia().criaProduto("Lentilha", 15, 2.5f);
+        ControladorProduto.getInstancia().criaProduto("Papel Higiênico", 16, 5);
+        ControladorProduto.getInstancia().criaProduto("Pêra", 17, 1);
+        ControladorProduto.getInstancia().criaProduto("Uva", 18, 0.95f);
+        ControladorProduto.getInstancia().criaProduto("Abacaxi", 19, 1);
+        ControladorProduto.getInstancia().criaProduto("Pote Plastico", 20, 2.5f);
+        ControladorProduto.getInstancia().criaProduto("Cigarro Gudang", 21, 23);
+        ControladorProduto.getInstancia().criaProduto("Halls", 22, 2);
+        ControladorProduto.getInstancia().criaProduto("Trindent", 23, 2);
+        ControladorProduto.getInstancia().criaProduto("Cerveja Heineken", 24, 3.50f);
+        ControladorProduto.getInstancia().criaProduto("Pão Françês", 25, 4);
+        ControladorProduto.getInstancia().criaProduto("Miojo Nissin", 26, 0.70f);
+        ControladorProduto.getInstancia().criaProduto("Refrigerante Coca-Cola", 27, 8);
+        ControladorProduto.getInstancia().criaProduto("Arroz Kiarroz 5KG", 28, 6.75f);
+        ControladorProduto.getInstancia().criaProduto("Amaciante Ype", 29, 5);
+        ControladorProduto.getInstancia().criaProduto("Cerveja Schin", 30, 1.80f);
     }
 
     public void showTelaDataBalanco() {
@@ -115,20 +136,30 @@ public class ControladorCompra implements Serializable {
         Date date = new Date();
         return dateFormat.format(date);
     }
-
-    public void finalizaCompra(String valor) {
-        valor = valor.replace(",", ".");
-        valor = valor.replace("R", "");
-        valor = valor.replace("$", "");
-        valor = valor.replace(" ", "");
-        valor = valor.replace("=", "");
-        float valorTotal = Float.parseFloat(valor);
-        Compra c = new Compra(listProdutos, getDate(), valorTotal);
+    private float totalCompra(){
+        float total = 0;
+        for(Produto p : listProdutos){
+            total += p.getPreco();
+        }
+        return total;
+    }
+    public void finalizaCompra() {
+        Compra c = new Compra(listProdutos, getDate(), totalCompra());
         CompraDAO.getInstancia().put(c);
-        System.out.println(c.getData());
-        System.out.println(c.getListaCompra());
-        System.out.println(c.getNumeroCompra());
-        System.out.println(c.getValorTotal());
+        TelaCompra.getInstancia().limpaTela();
+        TelaCupom.getInstancia().setTabela(listProdutos);
+        listProdutos.clear();
+    }
+
+    public float showBalanco(String data) {
+        float total = 0;
+        for(Compra c : CompraDAO.getInstancia().getList()){
+            if(c.getData().equals(data)){
+                //qtd++;
+                total += c.getValorTotal();
+            }
+        }
+        return total;  
     }
 
 }
